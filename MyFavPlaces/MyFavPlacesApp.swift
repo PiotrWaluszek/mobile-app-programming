@@ -15,3 +15,7 @@ struct MyFavPlacesApp: App {
         }
     }
 }
+
+#Preview {
+    ContentView()
+}
