@@ -8,29 +8,36 @@
 import SwiftUI
 
 struct ContentView: View {
+    var place: FavouritePlace
+    
     var body: some View {
         GeometryReader { geometry in
             ScrollView {
                 VStack(spacing: 0) {
                     ZStack(alignment: .bottom) {
-                        BackgroundImage()
-                            .frame(height: 300)
-                            .clipped()
+                        BackgroundImage(
+                            imageURL: place.backgroundURL,
+                            defaultImage: "background-default"
+                        )
+                        .frame(height: 300)
                         
-                        CircleImage()
-                            .offset(y: 130)
+                        CircleImage(
+                            imageURL: place.logoURL,
+                            defaultImage: place.type.defaultIcon
+                        )
+                        .offset(y: 130)
                     }
                     .frame(width: geometry.size.width)
                     
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Klub Studio")
+                        Text(place.name)
                             .font(.title)
                             .padding(.top, 140)
                         
                         HStack {
-                            Text("Brzmi dobrze!")
+                            Text(place.type.rawValue)
                             Spacer()
-                            Text("Krowodrza")
+                            Text(place.location)
                         }
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
@@ -41,7 +48,7 @@ struct ContentView: View {
                         Text("O miejscu")
                             .font(.title2)
                         
-                        Text("ACK Klub Studio to legendarne miejsce na muzycznej mapie Krakowa, a także nowoczesna przestrzeń eventowa. Koncerty, konferencje, wydarzenia kulturalne – tu wszystko brzmi dobrze, gdy jesteś z nami!")
+                        Text(place.description)
                             .font(.body)
                             .fixedSize(horizontal: false, vertical: true)
                     }
@@ -50,10 +57,20 @@ struct ContentView: View {
                 }
             }
             .scrollIndicators(.hidden)
+            .ignoresSafeArea(edges: .top)
         }
     }
 }
 
 #Preview {
-    ContentView()
+    ContentView(place: FavouritePlace(
+        name: "Klub Studio",
+        type: .pub,
+        location: "Krowodrza",
+        description: "ACK Klub Studio to legendarne miejsce na muzycznej mapie Krakowa, a także nowoczesna przestrzeń eventowa. Koncerty, konferencje, wydarzenia kulturalne – tu wszystko brzmi dobrze, gdy jesteś z nami!",
+        logoURL: URL(string: "https://home.agh.edu.pl/~psokolow/pum/klub-studio-logo.png"),
+        backgroundURL: URL(string: "https://home.agh.edu.pl/~psokolow/pum/klub-studio-bg.jpg"),
+        isFavourite: false,
+        isVisited: false
+    ))
 }

@@ -11,11 +11,9 @@ import SwiftUI
 struct MyFavPlacesApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainTabView()
         }
     }
 }
 
-#Preview {
-    ContentView()
-}
+
